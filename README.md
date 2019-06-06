@@ -101,7 +101,7 @@ fn main() {
 }
 ```
 
-Obviously this won't work because we haven't describe how the Vec should be display, but lets do
+Obviously this won't work because we haven't described how the Vec should be displayed, but lets do
 some Compiler Driven Development and get an idea of whats going wrong 
 
 ```
@@ -167,7 +167,7 @@ the impl does not reference only types defined in this crate
 In Rust you may implement traits from your crate onto types from other crates, or you may
 implent traits from other crates onto your types.
 
-> ⚠️ You may not apply other people’s traits onto other people’s types.
+> ⚠️ You can not apply external traits onto external types.
 
 Since Display and Vec are both in the standard library, neither is in our crate, we may not
 implement one for the other.
