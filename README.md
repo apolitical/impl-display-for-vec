@@ -1,6 +1,18 @@
 impl Display for Vec
 ====================
 
+Contents:
+---------
+
+1. [The problem](#the-problem)
+    1. [Preamble](#preamble)
+    2. [Display and vectors](#display-and-vectors)
+2. [The solution](#the-solution)
+    1. [The newtype pattern](#the-newtype-pattern)
+    2. [The ownership problem](#the-ownership-problem)
+    3. [Referencing](#referencing)
+    4. [Dereferencing](#dereferencing)
+
 The problem:
 ------------
 
@@ -50,6 +62,10 @@ impl fmt::Display for Album {
 ```
 
 With those three blocks in place, the program will produce the expected result.
+
+|Code example   | [preamble.rs]             |
+|---------------|:--------------------------|
+|Run the example| `cargo run --bin preamble`|
 
 ### Display and Vectors
 
@@ -140,6 +156,10 @@ onto your types.
 Since Display and Vec are not ours (they belong to the standard library) we may not implement one
 for the other.
 
+|Code example   | [display-and-vectors.rs]             |
+|---------------|:-------------------------------------|
+|Run the example| `cargo run --bin display-and-vectors`|
+
 The solution:
 -------------
 
@@ -214,6 +234,10 @@ Dark Side of the Moon (Pink Floyd)
 
 There’s still a problem though!
 
+|Code example   | [newtype.rs]             |
+|---------------|:-------------------------|
+|Run the example| `cargo run --bin newtype`|
+
 ### The Ownership Problem
 
 This solution is all very well for our use case here, but our Albums type takes ownership of the
@@ -258,6 +282,10 @@ options
 2. We make a copy of the data in albums (which also requires Album implements or derives Clone)
 
 Neither of these are particularly desirable, is there a better way?
+
+|Code example   | [ownership-problem.rs]             |
+|---------------|:-----------------------------------|
+|Run the example| `cargo run --bin ownership-problem`|
 
 ### Referencing:
 
@@ -324,6 +352,10 @@ fn main() {
     println!("{}", daniel.borrow_albums());
 }
 ```
+
+|Code example   | [referencing.rs]             |
+|---------------|:-----------------------------|
+|Run the example| `cargo run --bin referencing`|
 
 ### Dereferencing
 
@@ -399,8 +431,20 @@ fn main() {
 }
 ```
 
+|Code example   | [dereferencing.rs]             |
+|---------------|:-------------------------------|
+|Run the example| `cargo run --bin dereferencing`|
+
 And now you know far more about impl Display for Vec than you ever needed to know!
 
 Hope it was fun,
 
 Daniel
+
+<!-- File references -->
+[preamble.rs]: https://github.com/apolitical/impl-display-for-vec/blob/master/src/bin/preamble.rs
+[display-and-vectors.rs]: https://github.com/apolitical/impl-display-for-vec/blob/master/src/bin/display-and-vectors.rs
+[newtype.rs]: https://github.com/apolitical/impl-display-for-vec/blob/master/src/bin/newtype.rs
+[ownership-problem.rs]: https://github.com/apolitical/impl-display-for-vec/blob/master/src/bin/ownership-problem.rs
+[referencing.rs]: https://github.com/apolitical/impl-display-for-vec/blob/master/src/bin/referencing.rs
+[dereferencing.rs]: https://github.com/apolitical/impl-display-for-vec/blob/master/src/bin/dereferencing.rs
