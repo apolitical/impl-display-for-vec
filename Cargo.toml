@@ -1,0 +1,7 @@
+[package]
+name = "impl-vec"
+version = "0.1.0"
+authors = ["Daniel Mason <daniel.mason@apolitical.co>"]
+edition = "2018"
+
+[dependencies]
