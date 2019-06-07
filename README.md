@@ -457,8 +457,8 @@ You can remove the `impl User` code entirely.
 |---------------|:-------------------------------|
 |Run the example| `cargo run --bin dereferencing`|
 
-Concolusion
------------
+Conclusion
+----------
 
 Here's what we've learned:
 
