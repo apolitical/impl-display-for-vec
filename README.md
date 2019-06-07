@@ -17,8 +17,8 @@ Contents:
     1. [The newtype pattern](#the-newtype-pattern)
     2. [The ownership problem](#the-ownership-problem)
 3. [Improving the solution](#improving-the-solution)
-    3. [Referencing](#referencing)
-    4. [Dereferencing](#dereferencing)
+    1. [Referencing](#referencing)
+    2. [Dereferencing](#dereferencing)
 3. [Conclusion](#conclusion)
 
 The problem:
