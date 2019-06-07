@@ -36,7 +36,7 @@ struct Album {
 }
 ```
 
-Our app is going to print the albums in the format “title (artist)”. So, if write: 
+Our app is going to print the albums in the format “title (artist)”. So, if we write: 
 
 ```rust
 fn main() {
