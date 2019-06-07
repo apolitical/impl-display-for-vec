@@ -16,6 +16,7 @@ Contents:
 2. [The solution](#the-solution)
     1. [The newtype pattern](#the-newtype-pattern)
     2. [The ownership problem](#the-ownership-problem)
+3. [Improving the solution](#improving-the-solution)
     3. [Referencing](#referencing)
     4. [Dereferencing](#dereferencing)
 3. [Conclusion](#conclusion)
@@ -125,7 +126,7 @@ until we implement `Display` for `Vec`
 the trait std::fmt::Display is not implemented for std::vec::Vec<Album>
 ```
 
-So let’s do that:
+So let’s try that:
 
 ```rust
 impl fmt::Display for Vec<Album> {
@@ -190,7 +191,7 @@ define and implement a trait or new type instead
 ```
 
 We can’t define a new trait since we need to use `Display`, but we can define a new type. Obviously
-we don’t want to create our own Vec, but we can instead use the newtype pattern.
+we don’t want to create our own Vec, but we can instead use the *newtype* pattern.
 
 This pattern simply wraps one type in another. In our case:
 
@@ -200,17 +201,18 @@ struct Albums(pub Vec<Album>);
 
 > ℹ️ This pattern is normally used to improve type safety. For example if your program needs to deal
 > with emails which are stored in Strings, you may want a function that only handles Emails and not
-> any old String. You could use newtype idiom to enforce this:
+> any old String. You could use *newtype* idiom to enforce this:
 >
 > ```rust
 > struct Email(pub String);
 > ```
 
-There’s one little quirk with the newtype pattern though which is that where you used to be able to
-use `self` or, whatever variable contains it, you now have to use `self.0` (or `albums.0` if its
-stored in a variable called "albums") to access the underlying data.
+There’s one little quirk with the *newtype* pattern though which is that because we wrapped the data
+in another type, if we want to access the data itself, we need to access the zeroth element of our
+wrapper. I.e, if we're accessing a Vec called albums, we can just use `albums`. If the variable
+contains our *newtype*, to access the Vec inside we must use `albums.0`.
 
-If we change our implementation of `fmt::Display` to use our newtype, it looks like this.
+If we change our implementation of `fmt::Display` to use our *newtype*, it looks like this.
 
 ```rust
 impl fmt::Display for Albums {
@@ -222,7 +224,7 @@ impl fmt::Display for Albums {
 }
 ```
 
-We also need to wrap our Vec in our Albums newtype before we can print it.
+We also need to wrap our Vec in our Albums *newtype* before we can print it.
 
 ```rust
 fn main() {
@@ -250,7 +252,7 @@ Dark Side of the Moon (Pink Floyd)
 
 There’s still a problem though, lets dig a little further.
 
-|Code example   | [newtype.rs]                    |
+|Code example   | [*newtype*.rs]                    |
 |---------------|:--------------------------------|
 |Run the example| `cargo run --bin newtype`       |
 |Further Reading|[Rust by example: New Type Idiom]|
@@ -268,10 +270,11 @@ struct User {
 ```
 
 The obvious choice, and usually the right one, is to use `Albums`, but that might not work in every
-use case. If we’re only using the newtype for `Display` it will add some mental overhead where we
-want to use the Vec underneath.
+use case.
 
-So lets give our User a Vec of Album and look at how we can get our Albums type for Displaying it.
+If we’re only using the newtype for `Display` it will add some mental overhead where we
+want to use the Vec underneath, so lets give our User a Vec of Album and look at how we can get our
+Albums type for Displaying it.
 
 ```rust
 struct User {
@@ -301,6 +304,9 @@ Neither of these are particularly desirable, is there a better way?
 |---------------|:-----------------------------------|
 |Run the example| `cargo run --bin ownership-problem`|
 
+Improving the solution
+----------------------
+
 ### Referencing:
 
 What if, rather than taking ownership of the data, the newtype just took a reference to the data? We
@@ -310,9 +316,9 @@ can do that, it's going to get a little rocky but it'll be worth it:
 struct Albums<'a>(pub &'a Vec<Album>);
 ```
 
-“Argh, lifetimes!” I hear you cry. (Or is it just me?)
+“Argh! Lifetimes!” I hear you cry. (Or is it just me?)
 
-Don’t worry though, all this says is that `Albums` has a lifetime `'a`, which is tied to the owned
+Don’t worry though, all this says is that `Albums` has a lifetime (`'a`), which is tied to the owned
 value that `&Vec<Album>` references. I.e. The compiler will check that `Albums` isn't used after 
 the owned `Vec<Album>` has been discarded.
 
@@ -378,7 +384,7 @@ said the `User.albums` probably should be the `Albums` newtype, is there anythin
 using it easier? 
 
 For example, we don’t want to type `daniel.albums.0` every time we want access to the underlying
-vector.
+vector. We shouldn’t have to understand the implementation of the object in order to use it.
 
 Well, there’s a trait for that, `std::ops::Deref`. Going back to our original type that owned its
 data:
