@@ -1,8 +1,8 @@
-How do you impl Display for Vec
-===============================
+How do you impl Display for Vec?
+================================
 
-This is a common question, and applies not only to Display and Vec, but how do you implement any
-trait from outside your crate for any type outside your crate?
+Or, more generally, how do you implement any trait that is outside of your crate, for a type that
+is also outside of your crate?
 
 Lets create a micro app that helps us explore the problem. We'll create a simple struct implement
 Display for that, then try to implement Display for a Vec of that struct.
@@ -245,7 +245,7 @@ fn main() {
 
 Now our program outputs exactly what we wanted.
 
-```text
+```shell
 Sgt. Pepper's Lonely Hearts Club Band (The Beatles)
 Dark Side of the Moon (Pink Floyd)
 ```
