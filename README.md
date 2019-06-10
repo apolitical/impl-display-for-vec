@@ -51,7 +51,7 @@ fn main() {
 
 We want it to print:
 
-```
+```text
 Sgt. Pepper's Lonely Hearts Club Band (The Beatles)
 ```
 
@@ -69,7 +69,7 @@ impl fmt::Display for Album {
 
 And now when we run the program we get the expected result
 
-```
+```shell
 $ cargo run --bin preamble     
     Finished dev [unoptimized + debuginfo] target(s) in 0.40s
      Running `target/debug/preamble`
@@ -105,7 +105,7 @@ fn main() {
 Obviously this won't work because we haven't described how the Vec should be displayed, but lets do
 some Compiler Driven Development and get an idea of whats going wrong 
 
-```
+```shell
 $ cargo run --bin display-and-vectors
    Compiling impl-vec v0.1.0 (/Users/danielmason/projects/Apolitical/impl-vec)
 error[E0277]: `std::vec::Vec<Album>` doesn't implement `std::fmt::Display`
@@ -122,7 +122,7 @@ error[E0277]: `std::vec::Vec<Album>` doesn't implement `std::fmt::Display`
 As usual the compiler does it's best to tell us whats wrong, and as we expected, it won't compile
 until we implement `Display` for `Vec`
 
-```
+```text
 the trait std::fmt::Display is not implemented for std::vec::Vec<Album>
 ```
 
@@ -146,7 +146,7 @@ impl fmt::Display for Vec<Album> {
 
 Lets try again:
 
-```
+```shell
 $ cargo run --bin display-and-vectors
    Compiling impl-vec v0.1.0 (/Users/danielmason/projects/Apolitical/impl-vec)
 error[E0117]: only traits defined in the current crate can be implemented for arbitrary types
@@ -161,7 +161,7 @@ error[E0117]: only traits defined in the current crate can be implemented for ar
 
 Now we have a new error, but if we look closely the compiler has told us why this doesn't work.
 
-```
+```text
 the impl does not reference only types defined in this crate
 ```
 
@@ -186,7 +186,7 @@ The solution:
 
 The solution to our problem is actually mentioned in the next line of the error:
 
-```
+```text
 define and implement a trait or new type instead
 ```
 
@@ -245,7 +245,7 @@ fn main() {
 
 Now our program outputs exactly what we wanted.
 
-```
+```text
 Sgt. Pepper's Lonely Hearts Club Band (The Beatles)
 Dark Side of the Moon (Pink Floyd)
 ```
