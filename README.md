@@ -252,7 +252,7 @@ Dark Side of the Moon (Pink Floyd)
 
 There’s still a problem though, lets dig a little further.
 
-|Code example   | [*newtype*.rs]                    |
+|Code example   | [newtype.rs]                    |
 |---------------|:--------------------------------|
 |Run the example| `cargo run --bin newtype`       |
 |Further Reading|[Rust by example: New Type Idiom]|
